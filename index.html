@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>DFRDM · Helper</title>
+        <title>DFRD Monitor</title>
         <!-- Font Awesome -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
         <style>
@@ -32,6 +32,7 @@
                 --gray-800: #1f2937;
                 --gray-900: #111827;
                 --card-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+                --card-hover-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
                 --transition: all 0.2s ease;
             }
 
@@ -42,7 +43,7 @@
             }
 
             .container {
-                max-width: 1000px;
+                max-width: 1400px;
                 margin: 0 auto;
             }
 
@@ -59,6 +60,12 @@
                 padding: 20px 30px;
                 border-radius: 20px;
                 box-shadow: var(--card-shadow);
+            }
+
+            .header-left {
+                display: flex;
+                flex-direction: column;
+                gap: 4px;
             }
 
             .header-left h1 {
@@ -78,6 +85,12 @@
                 -webkit-background-clip: text;
                 -webkit-text-fill-color: transparent;
                 font-size: 2rem;
+            }
+
+            .header-subtitle {
+                color: var(--gray-400);
+                font-size: 0.8rem;
+                margin-left: 2.6rem; /* Align with text after icon */
             }
 
             .header-actions {
@@ -122,132 +135,205 @@
                 border-color: var(--gray-300);
             }
 
-            .btn-danger {
-                background: var(--danger);
-                color: white;
-            }
-
-            .btn-danger:hover {
-                background: #dc2626;
-            }
-
-            /* Data Panel */
-            .panel {
+            /* Search */
+            .search-section {
                 background: white;
+                padding: 20px 30px;
                 border-radius: 20px;
-                padding: 20px;
-                margin-bottom: 20px;
+                margin-bottom: 30px;
                 box-shadow: var(--card-shadow);
-            }
-
-            .form-row {
                 display: flex;
-                gap: 10px;
+                gap: 20px;
                 flex-wrap: wrap;
                 align-items: center;
             }
 
-            .form-group {
-                flex: 1 1 200px;
+            .search-box {
+                flex: 1;
+                min-width: 250px;
+                position: relative;
             }
 
-            .form-group input,
-            .form-group select {
+            .search-box i {
+                position: absolute;
+                left: 15px;
+                top: 50%;
+                transform: translateY(-50%);
+                color: var(--gray-400);
+            }
+
+            .search-box input {
                 width: 100%;
-                padding: 10px 12px;
+                padding: 12px 15px 12px 45px;
                 border: 1px solid var(--gray-200);
-                border-radius: 12px;
-                font-size: 0.95rem;
+                border-radius: 30px;
+                font-size: 1rem;
                 transition: var(--transition);
             }
 
-            .form-group input:focus,
-            .form-group select:focus {
+            .search-box input:focus {
                 outline: none;
                 border-color: var(--primary);
                 box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
             }
 
-            /* List */
-            .items-list {
-                list-style: none;
+            /* Stats */
+            .stats {
+                display: flex;
+                gap: 20px;
+                align-items: center;
+                color: var(--gray-500);
+                font-size: 0.95rem;
+            }
+
+            .stats span {
+                font-weight: 600;
+                color: var(--gray-700);
+            }
+
+            /* Cards Grid */
+            .apps-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+                gap: 25px;
                 margin-top: 20px;
             }
 
-            .item-card {
-                background: var(--gray-50);
-                border-radius: 12px;
-                padding: 15px;
-                margin-bottom: 10px;
+            .app-card {
+                background: white;
+                border-radius: 20px;
+                padding: 20px;
+                box-shadow: var(--card-shadow);
+                transition: var(--transition);
+                border: 1px solid transparent;
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+                backdrop-filter: blur(5px);
+            }
+
+            .app-card:hover {
+                transform: translateY(-5px);
+                box-shadow: var(--card-hover-shadow);
+                border-color: var(--primary-light);
+            }
+
+            .card-header {
                 display: flex;
                 align-items: center;
                 gap: 15px;
-                border: 1px solid var(--gray-200);
             }
 
-            .item-avatar {
-                width: 40px;
-                height: 40px;
-                border-radius: 10px;
-                background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-                color: white;
+            .avatar {
+                width: 50px;
+                height: 50px;
+                border-radius: 16px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                font-size: 1.2rem;
+                font-weight: 600;
+                font-size: 1.5rem;
+                color: white;
+                background: var(--primary);
+                flex-shrink: 0;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             }
 
-            .item-details {
+            .icon-avatar {
+                background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+                font-size: 1.8rem;
+            }
+
+            .card-title {
                 flex: 1;
+                overflow: hidden;
             }
 
-            .item-details h4 {
-                font-size: 1rem;
-                margin-bottom: 4px;
+            .card-title h3 {
+                font-size: 1.2rem;
+                font-weight: 600;
+                margin-bottom: 5px;
                 color: var(--gray-800);
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
 
-            .item-details p {
-                font-size: 0.8rem;
+            .card-title p {
                 color: var(--gray-500);
+                font-size: 0.85rem;
                 word-break: break-all;
             }
 
-            .item-actions {
+            .card-email {
                 display: flex;
-                gap: 5px;
+                align-items: center;
+                gap: 8px;
+                background: var(--gray-50);
+                padding: 8px 12px;
+                border-radius: 30px;
+                font-size: 0.9rem;
+                color: var(--gray-700);
+                border: 1px solid var(--gray-200);
+            }
+
+            .card-email i {
+                color: var(--primary);
+                font-size: 1rem;
+            }
+
+            .card-link {
+                background: var(--gray-50);
+                padding: 10px 12px;
+                border-radius: 12px;
+                font-size: 0.9rem;
+                word-break: break-all;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                border: 1px solid var(--gray-200);
+            }
+
+            .card-link i {
+                color: var(--primary);
+            }
+
+            .card-actions {
+                display: flex;
+                justify-content: flex-end;
+                gap: 8px;
+                margin-top: 10px;
+                border-top: 1px solid var(--gray-200);
+                padding-top: 15px;
             }
 
             .icon-btn {
-                width: 32px;
-                height: 32px;
+                width: 36px;
+                height: 36px;
                 border-radius: 50%;
                 border: none;
                 background: transparent;
                 color: var(--gray-500);
                 cursor: pointer;
                 transition: var(--transition);
-                font-size: 1rem;
+                font-size: 1.1rem;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
             }
 
             .icon-btn:hover {
-                background: var(--gray-200);
+                background: var(--gray-100);
                 color: var(--primary);
             }
 
             .icon-btn.delete:hover {
                 color: var(--danger);
+                background: rgba(239, 68, 68, 0.1);
             }
 
-            .empty-state {
-                text-align: center;
-                padding: 40px;
-                color: var(--gray-400);
-            }
-
-            .empty-state i {
-                font-size: 3rem;
-                margin-bottom: 10px;
+            .icon-btn.link:hover {
+                color: var(--secondary);
             }
 
             /* Modal */
@@ -310,6 +396,7 @@
                 font-size: 1.8rem;
                 cursor: pointer;
                 color: var(--gray-400);
+                transition: color 0.2s;
             }
 
             .modal-close:hover {
@@ -318,6 +405,42 @@
 
             .modal-body {
                 padding: 24px;
+            }
+
+            .form-group {
+                margin-bottom: 20px;
+            }
+
+            .form-group label {
+                display: block;
+                margin-bottom: 8px;
+                font-weight: 500;
+                color: var(--gray-700);
+                font-size: 0.95rem;
+            }
+
+            .form-group input,
+            .form-group select {
+                width: 100%;
+                padding: 12px 16px;
+                border: 1px solid var(--gray-200);
+                border-radius: 12px;
+                font-size: 1rem;
+                transition: var(--transition);
+                background: white;
+            }
+
+            .form-group input:focus,
+            .form-group select:focus {
+                outline: none;
+                border-color: var(--primary);
+                box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+            }
+
+            .form-hint {
+                font-size: 0.8rem;
+                color: var(--gray-500);
+                margin-top: 5px;
             }
 
             .modal-footer {
@@ -352,19 +475,84 @@
                 opacity: 1;
             }
 
-            .toast.success { background: var(--secondary); }
-            .toast.error { background: var(--danger); }
+            .toast.success {
+                background: var(--secondary);
+            }
+            .toast.error {
+                background: var(--danger);
+            }
+            .toast i {
+                font-size: 1.2rem;
+            }
 
+            /* Empty state */
+            .empty-state {
+                text-align: center;
+                padding: 60px 20px;
+                background: white;
+                border-radius: 20px;
+                box-shadow: var(--card-shadow);
+                color: var(--gray-500);
+            }
+
+            .empty-state i {
+                font-size: 4rem;
+                margin-bottom: 20px;
+                color: var(--gray-300);
+            }
+
+            .empty-state p {
+                font-size: 1.2rem;
+                margin-bottom: 20px;
+            }
+
+            /* Confirm Modal */
+            .confirm-modal .modal-content {
+                max-width: 400px;
+            }
+
+            .confirm-body {
+                text-align: center;
+                padding: 30px;
+            }
+
+            .confirm-body i {
+                font-size: 3rem;
+                color: var(--accent);
+                margin-bottom: 20px;
+            }
+
+            .confirm-body p {
+                font-size: 1.1rem;
+                margin-bottom: 25px;
+                color: var(--gray-700);
+            }
+
+            /* Responsive */
             @media (max-width: 768px) {
+                body {
+                    padding: 10px;
+                }
                 .header {
                     flex-direction: column;
+                    align-items: stretch;
                     text-align: center;
                 }
-                .form-row {
-                    flex-direction: column;
+                .header-left {
+                    align-items: center;
                 }
-                .form-group {
-                    width: 100%;
+                .header-subtitle {
+                    margin-left: 0;
+                }
+                .header-actions {
+                    justify-content: center;
+                }
+                .search-section {
+                    flex-direction: column;
+                    align-items: stretch;
+                }
+                .stats {
+                    justify-content: center;
                 }
             }
         </style>
@@ -376,76 +564,61 @@
                 <div class="header-left">
                     <h1>
                         <i class="fas fa-shield-alt"></i>
-                        DFRDM Helper
+                        DFRD Monitor
                     </h1>
+                    <span class="header-subtitle">Drive File Request Dashboard Monitor</span>
                 </div>
                 <div class="header-actions">
-                    <button class="btn btn-primary" id="addBtn"><i class="fas fa-plus"></i> New</button>
-                    <button class="btn btn-secondary" id="exportBtn"><i class="fas fa-download"></i> Export</button>
-                    <button class="btn btn-secondary" id="importBtn"><i class="fas fa-upload"></i> Import</button>
+                    <button class="btn btn-primary" id="addBtn"><i class="fas fa-plus"></i> Add App</button>
+                    <button class="btn btn-secondary" id="exportBtn"><i class="fas fa-upload"></i> Export</button>
+                    <button class="btn btn-secondary" id="importBtn"><i class="fas fa-download"></i> Import</button>
                 </div>
             </div>
 
-            <!-- Quick Add Panel -->
-            <div class="panel">
-                <div class="form-row">
-                    <div class="form-group">
-                        <input type="text" id="quickName" placeholder="Name (e.g., Internal Works)" />
-                    </div>
-                    <div class="form-group">
-                        <input type="email" id="quickEmail" placeholder="Email" />
-                    </div>
-                    <div class="form-group">
-                        <input type="url" id="quickLink" placeholder="Apps Script Link" />
-                    </div>
-                    <div class="form-group">
-                        <select id="quickIcon">
-                            <option value="fa-user">User</option>
-                            <option value="fa-envelope">Envelope</option>
-                            <option value="fa-link">Link</option>
-                            <option value="fa-shield-alt">Shield</option>
-                            <option value="fa-robot">Robot</option>
-                            <option value="fa-cloud">Cloud</option>
-                        </select>
-                    </div>
-                    <button class="btn btn-primary" id="quickAddBtn"><i class="fas fa-save"></i> Add</button>
+            <!-- Search -->
+            <div class="search-section">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search by name, email or link..." />
+                </div>
+                <div class="stats">
+                    <span><i class="fas fa-database"></i> Total: <span id="totalCount">0</span></span>
                 </div>
             </div>
 
-            <!-- Items List -->
-            <div class="panel">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                    <h3 style="color: var(--gray-700);">Saved Apps</h3>
-                    <span style="color: var(--gray-500); font-size: 0.9rem;">Total: <span id="totalCount">0</span></span>
-                </div>
-                <div id="itemsList" class="items-list"></div>
-                <div id="emptyState" class="empty-state" style="display: none;">
+            <!-- Apps Grid -->
+            <div id="appsContainer">
+                <div class="apps-grid" id="appsGrid"></div>
+                <div id="emptyState" class="empty-state" style="display: none">
                     <i class="fas fa-folder-open"></i>
-                    <p>No apps yet. Add one above or import a file.</p>
+                    <p>No apps yet. Add your first monitoring link!</p>
+                    <button class="btn btn-primary" onclick="document.getElementById('addBtn').click()">
+                        <i class="fas fa-plus"></i> Add App
+                    </button>
                 </div>
             </div>
         </div>
 
-        <!-- Edit Modal -->
+        <!-- Add/Edit Modal -->
         <div class="modal-backdrop" id="editModal">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h2 id="modalTitle">Edit App</h2>
+                    <h2 id="modalTitle">Add App</h2>
                     <button class="modal-close" id="closeModal">&times;</button>
                 </div>
                 <div class="modal-body">
                     <form id="editForm">
                         <div class="form-group">
                             <label>Name</label>
-                            <input type="text" id="editName" required />
+                            <input type="text" id="editName" placeholder="e.g., Infernal Works" required />
                         </div>
                         <div class="form-group">
                             <label>Email</label>
-                            <input type="email" id="editEmail" required />
+                            <input type="email" id="editEmail" placeholder="e.g., infernalworks07@gmail.com" required />
                         </div>
                         <div class="form-group">
                             <label>Apps Script Link</label>
-                            <input type="url" id="editLink" required />
+                            <input type="url" id="editLink" placeholder="https://script.google.com/..." required />
                         </div>
                         <div class="form-group">
                             <label>Icon</label>
@@ -456,6 +629,8 @@
                                 <option value="fa-shield-alt">Shield</option>
                                 <option value="fa-robot">Robot</option>
                                 <option value="fa-cloud">Cloud</option>
+                                <option value="fa-code">Code</option>
+                                <option value="fa-database">Database</option>
                             </select>
                         </div>
                     </form>
@@ -470,10 +645,10 @@
         <!-- Confirm Modal -->
         <div class="modal-backdrop confirm-modal" id="confirmModal">
             <div class="modal-content">
-                <div class="confirm-body" style="text-align: center; padding: 30px;">
-                    <i class="fas fa-exclamation-triangle" style="font-size: 3rem; color: var(--accent); margin-bottom: 20px;"></i>
-                    <p id="confirmMessage" style="margin-bottom: 25px;">Are you sure?</p>
-                    <div style="display: flex; gap: 12px; justify-content: center;">
+                <div class="confirm-body">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <p id="confirmMessage">Are you sure?</p>
+                    <div style="display: flex; gap: 12px; justify-content: center">
                         <button class="btn btn-secondary" id="confirmCancel">Cancel</button>
                         <button class="btn btn-danger" id="confirmOk">Delete</button>
                     </div>
@@ -490,47 +665,72 @@
         <script>
             (function () {
                 // DOM elements
-                const itemsList = document.getElementById('itemsList');
-                const emptyState = document.getElementById('emptyState');
-                const totalCountSpan = document.getElementById('totalCount');
-                const quickName = document.getElementById('quickName');
-                const quickEmail = document.getElementById('quickEmail');
-                const quickLink = document.getElementById('quickLink');
-                const quickIcon = document.getElementById('quickIcon');
-                const quickAddBtn = document.getElementById('quickAddBtn');
-                const addBtn = document.getElementById('addBtn');
-                const exportBtn = document.getElementById('exportBtn');
-                const importBtn = document.getElementById('importBtn');
+                const appsGrid = document.getElementById("appsGrid");
+                const emptyState = document.getElementById("emptyState");
+                const searchInput = document.getElementById("searchInput");
+                const totalCountSpan = document.getElementById("totalCount");
+                const addBtn = document.getElementById("addBtn");
+                const exportBtn = document.getElementById("exportBtn");
+                const importBtn = document.getElementById("importBtn");
 
                 // Modal elements
-                const editModal = document.getElementById('editModal');
-                const modalTitle = document.getElementById('modalTitle');
-                const editName = document.getElementById('editName');
-                const editEmail = document.getElementById('editEmail');
-                const editLink = document.getElementById('editLink');
-                const editIcon = document.getElementById('editIcon');
-                const closeModal = document.getElementById('closeModal');
-                const cancelModal = document.getElementById('cancelModal');
-                const saveModal = document.getElementById('saveModal');
+                const editModal = document.getElementById("editModal");
+                const modalTitle = document.getElementById("modalTitle");
+                const editName = document.getElementById("editName");
+                const editEmail = document.getElementById("editEmail");
+                const editLink = document.getElementById("editLink");
+                const editIcon = document.getElementById("editIcon");
+                const closeModal = document.getElementById("closeModal");
+                const cancelModal = document.getElementById("cancelModal");
+                const saveModal = document.getElementById("saveModal");
 
                 // Confirm modal
-                const confirmModal = document.getElementById('confirmModal');
-                const confirmMessage = document.getElementById('confirmMessage');
-                const confirmCancel = document.getElementById('confirmCancel');
-                const confirmOk = document.getElementById('confirmOk');
+                const confirmModal = document.getElementById("confirmModal");
+                const confirmMessage = document.getElementById("confirmMessage");
+                const confirmCancel = document.getElementById("confirmCancel");
+                const confirmOk = document.getElementById("confirmOk");
 
                 // Toast
-                const toast = document.getElementById('toast');
-                const toastMessage = document.getElementById('toastMessage');
+                const toast = document.getElementById("toast");
+                const toastMessage = document.getElementById("toastMessage");
 
                 // State
                 let apps = [];
+                let filteredApps = [];
                 let editingId = null;
                 let pendingDeleteId = null;
 
-                // Load from localStorage
+                // Helper: generate a consistent color from a string (email)
+                function stringToHue(str) {
+                    let hash = 0;
+                    for (let i = 0; i < str.length; i++) {
+                        hash = str.charCodeAt(i) + ((hash << 5) - hash);
+                    }
+                    return Math.abs(hash % 360);
+                }
+
+                // Generate avatar HTML based on name, email, and optionally selected icon
+                function getAvatarHtml(app) {
+                    if (app.icon) {
+                        // Use selected icon
+                        return `<div class="avatar icon-avatar"><i class="fas ${app.icon}"></i></div>`;
+                    } else {
+                        // Fallback to dynamic letter avatar
+                        const letter =
+                            app.name && app.name.trim()
+                                ? app.name.trim()[0].toUpperCase()
+                                : app.email
+                                  ? app.email[0].toUpperCase()
+                                  : "?";
+                        const hue = stringToHue(app.email || app.name || "default");
+                        const backgroundColor = `hsl(${hue}, 70%, 60%)`;
+                        return `<div class="avatar" style="background-color: ${backgroundColor};">${letter}</div>`;
+                    }
+                }
+
+                // Load from localStorage only (no hardcoded defaults)
                 function loadApps() {
-                    const stored = localStorage.getItem('dfrdm_helper');
+                    const stored = localStorage.getItem("aams_apps");
                     if (stored) {
                         try {
                             apps = JSON.parse(stored);
@@ -538,109 +738,133 @@
                             apps = [];
                         }
                     } else {
-                        apps = [];
+                        apps = []; // Start empty
                     }
-                    renderApps();
+                    filterApps();
                 }
 
                 function saveApps() {
-                    localStorage.setItem('dfrdm_helper', JSON.stringify(apps));
+                    localStorage.setItem("aams_apps", JSON.stringify(apps));
+                    filterApps();
+                }
+
+                function filterApps() {
+                    const term = searchInput.value.toLowerCase().trim();
+                    if (!term) {
+                        filteredApps = [...apps];
+                    } else {
+                        filteredApps = apps.filter(
+                            (app) =>
+                                app.name.toLowerCase().includes(term) ||
+                                app.email.toLowerCase().includes(term) ||
+                                app.link.toLowerCase().includes(term)
+                        );
+                    }
                     renderApps();
+                    updateStats();
                 }
 
                 function renderApps() {
-                    if (apps.length === 0) {
-                        itemsList.innerHTML = '';
-                        emptyState.style.display = 'block';
-                        totalCountSpan.textContent = '0';
+                    if (filteredApps.length === 0) {
+                        appsGrid.innerHTML = "";
+                        emptyState.style.display = "block";
                         return;
                     }
-                    emptyState.style.display = 'none';
-                    totalCountSpan.textContent = apps.length;
-
-                    itemsList.innerHTML = apps.map(app => {
-                        const iconHtml = app.icon ? `<i class="fas ${app.icon}"></i>` : app.name[0].toUpperCase();
-                        return `
-                            <div class="item-card" data-id="${app.id}">
-                                <div class="item-avatar">${iconHtml}</div>
-                                <div class="item-details">
-                                    <h4>${escapeHtml(app.name)}</h4>
-                                    <p>${escapeHtml(app.email)}</p>
-                                    <p style="font-size:0.75rem;">${escapeHtml(app.link.substring(0,50))}${app.link.length>50?'…':''}</p>
-                                </div>
-                                <div class="item-actions">
-                                    <button class="icon-btn" onclick="editApp(${app.id})"><i class="fas fa-edit"></i></button>
-                                    <button class="icon-btn delete" onclick="deleteApp(${app.id})"><i class="fas fa-trash"></i></button>
-                                </div>
+                    emptyState.style.display = "none";
+                    appsGrid.innerHTML = filteredApps
+                        .map((app) => {
+                            const avatarHtml = getAvatarHtml(app);
+                            return `
+                    <div class="app-card" data-id="${app.id}">
+                        <div class="card-header">
+                            ${avatarHtml}
+                            <div class="card-title">
+                                <h3>${escapeHtml(app.name)}</h3>
+                                <p>ID: ${app.id}</p>
                             </div>
-                        `;
-                    }).join('');
+                        </div>
+                        <div class="card-email">
+                            <i class="fas fa-envelope"></i>
+                            ${escapeHtml(app.email)}
+                        </div>
+                        <div class="card-link" title="${escapeHtml(app.link)}">
+                            <i class="fas fa-link"></i>
+                            ${escapeHtml(app.link.substring(0, 50))}${app.link.length > 50 ? "…" : ""}
+                        </div>
+                        <div class="card-actions">
+                            <button class="icon-btn" onclick="editApp(${app.id})" title="Edit">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="icon-btn delete" onclick="deleteApp(${app.id})" title="Delete">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                            <button class="icon-btn link" onclick="openLink('${escapeHtml(app.link)}')" title="Open link">
+                                <i class="fas fa-external-link-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                        })
+                        .join("");
                 }
 
                 function escapeHtml(unsafe) {
-                    return unsafe.replace(/[&<>"']/g, function(m) {
-                        if(m === '&') return '&amp;';
-                        if(m === '<') return '&lt;';
-                        if(m === '>') return '&gt;';
-                        if(m === '"') return '&quot;';
-                        if(m === "'") return '&#039;';
+                    return unsafe.replace(/[&<>"']/g, function (m) {
+                        if (m === "&") return "&amp;";
+                        if (m === "<") return "&lt;";
+                        if (m === ">") return "&gt;";
+                        if (m === '"') return "&quot;";
+                        if (m === "'") return "&#039;";
                         return m;
                     });
                 }
 
-                // Add from quick panel
-                function addFromQuick() {
-                    const name = quickName.value.trim();
-                    const email = quickEmail.value.trim();
-                    const link = quickLink.value.trim();
-                    const icon = quickIcon.value;
-
-                    if (!name || !email || !link) {
-                        showToast('All fields required', 'error');
-                        return;
-                    }
-                    if (!email.includes('@') || !email.includes('.')) {
-                        showToast('Invalid email', 'error');
-                        return;
-                    }
-                    try { new URL(link); } catch (e) {
-                        showToast('Invalid URL', 'error');
-                        return;
-                    }
-
-                    const newId = Date.now();
-                    apps.push({ id: newId, name, email, link, icon });
-                    saveApps();
-                    quickName.value = '';
-                    quickEmail.value = '';
-                    quickLink.value = '';
-                    quickIcon.value = 'fa-user';
-                    showToast('App added', 'success');
+                function updateStats() {
+                    totalCountSpan.textContent = filteredApps.length;
                 }
 
-                // Edit functions
-                window.editApp = function(id) {
-                    const app = apps.find(a => a.id === id);
+                // Open link in same tab
+                window.openLink = function (link) {
+                    window.location.href = link; // opens in same tab
+                };
+
+                // Add/Edit functions
+                window.editApp = function (id) {
+                    const app = apps.find((a) => a.id === id);
                     if (app) {
                         editingId = id;
-                        modalTitle.textContent = 'Edit App';
+                        modalTitle.textContent = "Edit App";
                         editName.value = app.name;
                         editEmail.value = app.email;
                         editLink.value = app.link;
-                        editIcon.value = app.icon || 'fa-user';
-                        editModal.classList.add('active');
+                        editIcon.value = app.icon || "fa-user";
+                        editModal.classList.add("active");
                     }
                 };
 
-                window.deleteApp = function(id) {
+                window.deleteApp = function (id) {
                     pendingDeleteId = id;
-                    confirmMessage.textContent = 'Delete this app?';
-                    confirmModal.classList.add('active');
+                    confirmMessage.textContent = "Are you sure you want to delete this app?";
+                    confirmModal.classList.add("active");
                 };
 
                 // Modal handlers
+                function resetModal() {
+                    editingId = null;
+                    editName.value = "";
+                    editEmail.value = "";
+                    editLink.value = "";
+                    editIcon.value = "fa-user";
+                    modalTitle.textContent = "Add App";
+                }
+
+                function openAddModal() {
+                    resetModal();
+                    editModal.classList.add("active");
+                }
+
                 function closeModalHandler() {
-                    editModal.classList.remove('active');
+                    editModal.classList.remove("active");
                 }
 
                 function saveModalHandler() {
@@ -650,63 +874,111 @@
                     const icon = editIcon.value;
 
                     if (!name || !email || !link) {
-                        showToast('All fields required', 'error');
-                        return;
-                    }
-                    if (!email.includes('@') || !email.includes('.')) {
-                        showToast('Invalid email', 'error');
-                        return;
-                    }
-                    try { new URL(link); } catch (e) {
-                        showToast('Invalid URL', 'error');
+                        showToast("All fields are required", "error");
                         return;
                     }
 
-                    const index = apps.findIndex(a => a.id === editingId);
-                    if (index !== -1) {
-                        apps[index] = { ...apps[index], name, email, link, icon };
-                        saveApps();
-                        closeModalHandler();
-                        showToast('App updated', 'success');
+                    if (!email.includes("@") || !email.includes(".")) {
+                        showToast("Enter a valid email", "error");
+                        return;
                     }
+
+                    try {
+                        new URL(link);
+                    } catch (e) {
+                        showToast("Enter a valid URL", "error");
+                        return;
+                    }
+
+                    if (editingId) {
+                        const index = apps.findIndex((a) => a.id === editingId);
+                        if (index !== -1) {
+                            apps[index] = { ...apps[index], name, email, link, icon };
+                        }
+                    } else {
+                        const newId = Date.now();
+                        apps.push({ id: newId, name, email, link, icon });
+                    }
+
+                    saveApps();
+                    closeModalHandler();
+                    showToast(editingId ? "App updated" : "App added", "success");
                 }
 
-                // Confirm modal
+                // Confirm modal handlers
                 function closeConfirm() {
-                    confirmModal.classList.remove('active');
+                    confirmModal.classList.remove("active");
                     pendingDeleteId = null;
                 }
 
                 function confirmDelete() {
                     if (pendingDeleteId) {
-                        apps = apps.filter(a => a.id !== pendingDeleteId);
+                        apps = apps.filter((a) => a.id !== pendingDeleteId);
                         saveApps();
                         closeConfirm();
-                        showToast('App deleted', 'success');
+                        showToast("App deleted", "success");
                     }
                 }
 
-                // Export/Import (same as reference)
+                // Import/Export
                 function exportData() {
                     if (apps.length === 0) {
-                        showToast('No data to export', 'error');
+                        showToast("No data to export", "error");
                         return;
                     }
-                    const dataStr = JSON.stringify(apps, null, 2);
-                    const blob = new Blob([dataStr], { type: 'application/json' });
-                    const url = URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.href = url;
-                    a.download = `dfrdm_helper_${new Date().toISOString().slice(0,10)}.json`;
-                    a.click();
-                    URL.revokeObjectURL(url);
-                    showToast('Export successful', 'success');
+
+                    // Prepare structured export data
+                    const dataToExport = {
+                        version: new Date().toISOString(), // or replace with your custom version function
+                        data: apps,
+                    };
+
+                    const dataStr = JSON.stringify(dataToExport, null, 2);
+                    const dataBlob = new Blob([dataStr], { type: "application/json" });
+
+                    // Create download link
+                    const downloadLink = document.createElement("a");
+                    const url = URL.createObjectURL(dataBlob);
+                    downloadLink.href = url;
+
+                    // Timestamped filename (cleaner than slice hack)
+                    const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
+                    const filename = `DFRDM_${timestamp}.json`;
+                    downloadLink.setAttribute("download", filename);
+
+                    // Append to DOM
+                    document.body.appendChild(downloadLink);
+
+                    // Smart success trigger after user interaction
+                    downloadLink.addEventListener("click", function () {
+                        setTimeout(function () {
+                            const isDownloadSupported = "download" in document.createElement("a");
+
+                            if (isDownloadSupported) {
+                                window.addEventListener("focus", function onFocus() {
+                                    showToast("Export successful", "success");
+                                    window.removeEventListener("focus", onFocus);
+                                });
+                            } else {
+                                showToast("Export successful", "success");
+                            }
+                        }, 1000);
+                    });
+
+                    // Trigger download
+                    downloadLink.click();
+
+                    // Cleanup
+                    setTimeout(() => {
+                        document.body.removeChild(downloadLink);
+                        URL.revokeObjectURL(url);
+                    }, 100);
                 }
 
                 function importData() {
-                    const input = document.createElement('input');
-                    input.type = 'file';
-                    input.accept = '.json';
+                    const input = document.createElement("input");
+                    input.type = "file";
+                    input.accept = ".json";
                     input.onchange = (e) => {
                         const file = e.target.files[0];
                         if (!file) return;
@@ -714,19 +986,25 @@
                         reader.onload = (ev) => {
                             try {
                                 const imported = JSON.parse(ev.target.result);
-                                if (!Array.isArray(imported)) throw new Error('Not an array');
-                                const valid = imported.every(item =>
-                                    item.hasOwnProperty('id') &&
-                                    item.hasOwnProperty('name') &&
-                                    item.hasOwnProperty('email') &&
-                                    item.hasOwnProperty('link')
+                                if (!Array.isArray(imported)) {
+                                    throw new Error("Not an array");
+                                }
+                                // Accept data with or without icon field
+                                const valid = imported.every(
+                                    (item) =>
+                                        item.hasOwnProperty("id") &&
+                                        item.hasOwnProperty("name") &&
+                                        item.hasOwnProperty("email") &&
+                                        item.hasOwnProperty("link")
                                 );
-                                if (!valid) throw new Error('Invalid structure');
+                                if (!valid) {
+                                    throw new Error("Invalid structure");
+                                }
                                 apps = imported;
                                 saveApps();
-                                showToast(`Imported ${apps.length} apps`, 'success');
+                                showToast(`Imported ${apps.length} apps`, "success");
                             } catch (err) {
-                                showToast('Invalid JSON file', 'error');
+                                showToast("Invalid JSON file", "error");
                             }
                         };
                         reader.readAsText(file);
@@ -734,39 +1012,47 @@
                     input.click();
                 }
 
-                function showToast(message, type = 'success') {
+                // Toast
+                function showToast(message, type = "success") {
                     toastMessage.textContent = message;
-                    toast.className = 'toast show ' + (type === 'error' ? 'error' : 'success');
-                    setTimeout(() => toast.classList.remove('show'), 3000);
+                    toast.className = "toast show " + (type === "error" ? "error" : "success");
+                    setTimeout(() => {
+                        toast.classList.remove("show");
+                    }, 3000);
                 }
 
-                // Event listeners
-                quickAddBtn.addEventListener('click', addFromQuick);
-                addBtn.addEventListener('click', () => {
-                    quickName.value = '';
-                    quickEmail.value = '';
-                    quickLink.value = '';
-                    quickIcon.value = 'fa-user';
-                    quickName.focus();
-                });
-                exportBtn.addEventListener('click', exportData);
-                importBtn.addEventListener('click', importData);
-
-                closeModal.addEventListener('click', closeModalHandler);
-                cancelModal.addEventListener('click', closeModalHandler);
-                saveModal.addEventListener('click', saveModalHandler);
-                editModal.addEventListener('click', (e) => { if (e.target === editModal) closeModalHandler(); });
-
-                confirmCancel.addEventListener('click', closeConfirm);
-                confirmOk.addEventListener('click', confirmDelete);
-                confirmModal.addEventListener('click', (e) => { if (e.target === confirmModal) closeConfirm(); });
-
                 // Auto-suggest name from email
-                quickEmail.addEventListener('blur', function() {
-                    if (!quickName.value.trim() && quickEmail.value.includes('@')) {
-                        const localPart = quickEmail.value.split('@')[0];
-                        quickName.value = localPart.replace(/[._-]/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+                editEmail.addEventListener("blur", function () {
+                    if (!editingId && !editName.value.trim()) {
+                        const email = editEmail.value.trim();
+                        if (email.includes("@")) {
+                            const localPart = email.split("@")[0];
+                            const suggestedName = localPart
+                                .replace(/[._-]/g, " ")
+                                .replace(/\b\w/g, (l) => l.toUpperCase());
+                            editName.value = suggestedName;
+                        }
                     }
+                });
+
+                // Event listeners
+                searchInput.addEventListener("input", filterApps);
+                addBtn.addEventListener("click", openAddModal);
+                exportBtn.addEventListener("click", exportData);
+                importBtn.addEventListener("click", importData);
+
+                closeModal.addEventListener("click", closeModalHandler);
+                cancelModal.addEventListener("click", closeModalHandler);
+                saveModal.addEventListener("click", saveModalHandler);
+
+                editModal.addEventListener("click", (e) => {
+                    if (e.target === editModal) closeModalHandler();
+                });
+
+                confirmCancel.addEventListener("click", closeConfirm);
+                confirmOk.addEventListener("click", confirmDelete);
+                confirmModal.addEventListener("click", (e) => {
+                    if (e.target === confirmModal) closeConfirm();
                 });
 
                 // Initialize
